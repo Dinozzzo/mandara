@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mandara — Sicilian Tangerine Liqueur</title>
+
+    <!-- Fonts: Jost (display) + Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/tokens.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link rel="stylesheet" href="styles/header.css" />
+    <link rel="stylesheet" href="styles/hero.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="#" class="site-header__logo" aria-label="Mandara — home">
+        <img src="../images/white-logo.png" alt="Mandara" />
+      </a>
+
+      <button
+        class="site-nav__toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+      >
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="primary-nav" aria-label="Primary">
+        <ul class="site-nav__list">
+          <li><a href="#" class="site-nav__link">Home</a></li>
+          <li><a href="#story" class="site-nav__link">Story</a></li>
+          <li><a href="#cocktails" class="site-nav__link">Cocktails</a></li>
+          <li><a href="#shop" class="site-nav__link">Shop</a></li>
+          <li><a href="#contact" class="site-nav__link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-nav__backdrop" aria-hidden="true"></div>
+    </header>
+
+    <main>
+      <section class="hero" aria-label="Mandara">
+        <div class="hero__bg" aria-hidden="true"></div>
+        <div class="hero__overlay" aria-hidden="true"></div>
+        <div class="hero__grain" aria-hidden="true"></div>
+        <div class="hero__content">
+          <img
+            src="../images/white-logo.png"
+            alt="Mandara"
+            class="hero__logo"
+          />
+        </div>
+      </section>
+
+      <!-- TEMP: keeps the page scrollable so the header tear-off can be tested. Remove when the Mandarin section is built. -->
+      <div style="height: 150vh" aria-hidden="true"></div>
+    </main>
+
+    <script src="scripts/main.js" defer></script>
+  </body>
+</html>

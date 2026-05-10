@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(rtk find *)",
+      "Read(//Users/dinoleotta/Documents/PERSONAL PROJECT/Mandara/**)",
+      "WebFetch(domain:integratedbio.com)"
+    ]
+  }
+}
