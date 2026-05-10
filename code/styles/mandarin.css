@@ -1,0 +1,298 @@
+/* Mandarin section — orange panel below the hero, with a two-peak
+   wave rising from its top edge into the hero above. */
+
+.mandarin {
+  position: relative;
+  background-color: var(--color-bitter-orange);
+}
+
+.mandarin__wave {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  height: 160px;
+  margin-bottom: -1px; /* hairline overlap to avoid sub-pixel seam */
+  display: block;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 720px) {
+  .mandarin__wave {
+    height: 100px;
+  }
+}
+
+/* Tree — decorative, anchored right, pinned via sticky while scrolling
+   through the section, with a subtle floating animation. */
+.mandarin__tree-track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: clamp(340px, 36vw, 600px);
+  pointer-events: none;
+  z-index: 1; /* above .mandarin__decor (z:0); content (z:1, later in DOM) still wins */
+}
+
+.mandarin__tree {
+  position: sticky;
+  top: 8vh;
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0.72;
+  transform: translateX(28%);
+  animation: tree-float 12s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes tree-float {
+  0%,
+  100% {
+    transform: translateX(28%) translateY(0);
+  }
+  50% {
+    transform: translateX(28%) translateY(-14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mandarin__tree {
+    animation: none;
+  }
+}
+
+/* Hide tree on small screens — would crowd the content */
+@media (max-width: 720px) {
+  .mandarin__tree-track {
+    display: none;
+  }
+}
+
+/* Botanical decor — leaves & orange slices, ink line drawings, very low
+   opacity, scattered behind content for editorial texture. */
+.mandarin__decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden; /* keep rotated SVGs from bleeding into adjacent sections */
+  z-index: 0;
+  color: var(--color-ink);
+}
+
+.mandarin__decor-item {
+  position: absolute;
+  display: block;
+  opacity: 0.09;
+}
+
+.mandarin__decor-item--leaf-1 {
+  top: 8%;
+  left: 4%;
+  width: clamp(80px, 9vw, 140px);
+  transform: rotate(-22deg);
+}
+
+.mandarin__decor-item--slice-1 {
+  top: 46%;
+  left: 6%;
+  width: clamp(100px, 11vw, 170px);
+  transform: rotate(12deg);
+}
+
+.mandarin__decor-item--leaf-2 {
+  top: 70%;
+  left: 14%;
+  width: clamp(70px, 7vw, 110px);
+  transform: rotate(36deg);
+}
+
+.mandarin__decor-item--slice-2 {
+  top: 18%;
+  right: 28%;
+  width: clamp(80px, 8vw, 130px);
+  transform: rotate(-18deg);
+  opacity: 0.07;
+}
+
+.mandarin__decor-item--leaf-3 {
+  top: 84%;
+  right: 32%;
+  width: clamp(80px, 8vw, 130px);
+  transform: rotate(-48deg);
+  opacity: 0.08;
+}
+
+.mandarin__decor-item--slice-3 {
+  top: 34%;
+  right: 8%;
+  width: clamp(90px, 10vw, 150px);
+  transform: rotate(24deg);
+  opacity: 0.08;
+}
+
+.mandarin__decor-item--leaf-4 {
+  top: 58%;
+  right: 14%;
+  width: clamp(70px, 7vw, 110px);
+  transform: rotate(-32deg);
+  opacity: 0.09;
+}
+
+.mandarin__decor-item--slice-4 {
+  top: 4%;
+  right: 18%;
+  width: clamp(70px, 7vw, 110px);
+  transform: rotate(-8deg);
+  opacity: 0.07;
+}
+
+@media (max-width: 720px) {
+  .mandarin__decor-item--slice-2,
+  .mandarin__decor-item--leaf-3,
+  .mandarin__decor-item--slice-3,
+  .mandarin__decor-item--leaf-4,
+  .mandarin__decor-item--slice-4 {
+    display: none;
+  }
+  .mandarin__decor-item--leaf-1 {
+    width: 64px;
+    top: 4%;
+  }
+  .mandarin__decor-item--slice-1 {
+    width: 80px;
+  }
+  .mandarin__decor-item--leaf-2 {
+    width: 56px;
+  }
+}
+
+/* Layout */
+.mandarin__container {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(5rem, 11vw, 9rem) var(--gutter) clamp(5rem, 10vw, 8rem);
+}
+
+.mandarin__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-align: center;
+  margin: 0 0 clamp(5rem, 10vw, 8rem);
+}
+
+/* Decorative separator — thin ink line with a small tangerine in the middle */
+.mandarin__separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  max-width: 680px;
+  margin: clamp(6rem, 12vw, 10rem) auto;
+  color: var(--color-ink);
+}
+
+.mandarin__separator-line {
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.mandarin__separator-mark {
+  display: block;
+  width: clamp(38px, 4vw, 56px);
+  height: auto;
+  flex-shrink: 0;
+}
+
+.mandarin__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(5rem, 11vw, 10rem);
+  align-items: center;
+}
+
+/* Reversed split — image right, text left */
+.mandarin__split--reversed .mandarin__image-wrap {
+  order: 2;
+}
+.mandarin__split--reversed .mandarin__body {
+  order: 1;
+  justify-self: end;
+}
+
+/* Image — mandarin frame only (no extra borders).
+   Sized so a subsection (title + split) fits within ~100vh: width is
+   capped both by pixel size and by viewport height (with the 4/5 aspect
+   ratio the resulting image height stays around 60vh). */
+.mandarin__image-wrap {
+  position: relative;
+  width: 100%;
+  max-width: min(460px, 48vh);
+  justify-self: center;
+}
+
+.mandarin__image-frame {
+  position: relative;
+  z-index: 1;
+  border: 12px solid var(--color-mandarin);
+  border-radius: 32px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+}
+
+.mandarin__image-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Body text */
+.mandarin__body {
+  color: var(--color-ink);
+  font-family: 'Ysabeau', sans-serif;
+  font-size: clamp(1.0625rem, 1.1vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.75;
+  max-width: 40ch;
+}
+
+.mandarin__body p {
+  margin: 0 0 1.4em;
+}
+
+.mandarin__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Mobile — stack image above text */
+@media (max-width: 720px) {
+  .mandarin__split {
+    grid-template-columns: 1fr;
+    gap: clamp(3rem, 10vw, 4rem);
+  }
+
+  /* Keep image first on mobile for both layouts (consistent rhythm) */
+  .mandarin__split--reversed .mandarin__image-wrap {
+    order: 1;
+  }
+  .mandarin__split--reversed .mandarin__body {
+    order: 2;
+    justify-self: center;
+  }
+
+  .mandarin__body {
+    max-width: 60ch;
+  }
+}

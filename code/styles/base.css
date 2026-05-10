@@ -8,6 +8,12 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Reserve scrollbar space so the page doesn't shift when overflow:hidden
+     is applied while opening the mobile drawer. */
+  scrollbar-gutter: stable;
+  /* Prevent off-canvas decorative elements (e.g., the orange section's tree)
+     from creating a horizontal scrollbar. */
+  overflow-x: hidden;
 }
 
 body {

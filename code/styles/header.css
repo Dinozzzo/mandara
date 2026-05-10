@@ -112,14 +112,14 @@
 .site-nav__toggle {
   display: none;
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   background: transparent;
   border: 0;
   cursor: pointer;
   z-index: 2;
-  border-radius: 12px;
+  border-radius: 18px;
   transition:
     background 480ms var(--ease-luxury),
     box-shadow 480ms var(--ease-luxury),
@@ -129,8 +129,8 @@
 
 .site-nav__toggle span {
   position: absolute;
-  left: 6px;
-  right: 6px;
+  left: 9px;
+  right: 9px;
   height: 1.5px;
   background-color: var(--color-ivory);
   transition:
@@ -138,15 +138,15 @@
     top 320ms var(--ease-luxury);
 }
 
-.site-nav__toggle span:nth-child(1) { top: 13px; }
-.site-nav__toggle span:nth-child(2) { top: 21px; }
+.site-nav__toggle span:nth-child(1) { top: 15px; }
+.site-nav__toggle span:nth-child(2) { top: 23px; }
 
 .site-header.is-open .site-nav__toggle span:nth-child(1) {
-  top: 17px;
+  top: 19px;
   transform: rotate(45deg);
 }
 .site-header.is-open .site-nav__toggle span:nth-child(2) {
-  top: 17px;
+  top: 19px;
   transform: rotate(-45deg);
 }
 
@@ -157,20 +157,17 @@
 
 /* Mobile drawer */
 @media (max-width: 720px) {
+  /* Hamburger always shows the glass pill on mobile (over hero + scrolled) */
   .site-nav__toggle {
     display: block;
-  }
-
-  .site-header__logo img {
-    height: 38px;
-  }
-
-  /* Hamburger pill (active when scrolled) */
-  .site-header.is-scrolled .site-nav__toggle {
     background: var(--header-bg-translucent);
     backdrop-filter: blur(14px) saturate(1.2);
     -webkit-backdrop-filter: blur(14px) saturate(1.2);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  }
+
+  .site-header__logo img {
+    height: 38px;
   }
 
   .site-nav__backdrop {
@@ -180,7 +177,7 @@
     background: rgba(0, 0, 0, 0.5);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 420ms var(--ease-luxury);
+    transition: opacity 900ms var(--ease-luxury);
     z-index: 98;
   }
 
@@ -196,10 +193,12 @@
     width: min(80vw, 320px);
     height: 100vh;
     height: 100svh;
-    background: var(--header-bg);
+    background: var(--header-bg-translucent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
     box-shadow: -16px 0 40px rgba(0, 0, 0, 0.35);
     transform: translateX(100%);
-    transition: transform 420ms var(--ease-luxury);
+    transition: transform 900ms var(--ease-luxury);
     z-index: 99;
     display: flex;
     align-items: center;

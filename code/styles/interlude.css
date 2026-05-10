@@ -1,0 +1,76 @@
+/* Interlude — full-width editorial photo break between sections.
+   Large Sicilian photograph as background, oversized display quote
+   layered on top. Acts as a sensory pause in the page rhythm. */
+
+.interlude {
+  position: relative;
+  width: 100%;
+  height: 110vh;
+  height: 110svh;
+  overflow: hidden;
+  background-color: var(--color-ink);
+}
+
+.interlude__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../../images/photoshoot3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Subtle dark gradient — keeps cream text legible across any image
+   region without flattening the photograph. */
+.interlude__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.30) 55%,
+    rgba(0, 0, 0, 0.42) 100%
+  );
+  pointer-events: none;
+}
+
+.interlude__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(5rem, 12vw, 9rem) var(--gutter);
+}
+
+.interlude__quote {
+  margin: 0;
+  max-width: 18ch;
+  text-align: center;
+  color: var(--color-ivory);
+  font-family: 'Fraunces', 'Jost', serif;
+  font-weight: 700;
+  font-size: clamp(2.75rem, 7vw, 6.5rem);
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Accented words — grove green, italic for editorial pull-quote feel */
+.interlude__accent {
+  color: var(--color-grove);
+  font-style: italic;
+  font-weight: 700;
+}
+
+/* Soft separator inside the quote — forces a line break and draws a
+   short horizontal rule between the two halves of the sentence. */
+.interlude__rule {
+  display: block;
+  width: clamp(48px, 6vw, 80px);
+  height: 1px;
+  background: var(--color-ivory);
+  opacity: 0.7;
+  margin: clamp(1.25rem, 2.4vw, 2rem) auto;
+}

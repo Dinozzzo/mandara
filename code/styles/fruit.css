@@ -1,0 +1,60 @@
+/* The Fruit — grove-green editorial block introducing the Tardivo di
+   Ciaculli tangerine. Centered title, narrative body, hero fruit shot. */
+
+.fruit {
+  position: relative;
+  background-color: var(--color-grove);
+  color: var(--color-ivory);
+  overflow: hidden;
+}
+
+.fruit__container {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(5rem, 11vw, 9rem) var(--gutter);
+  text-align: center;
+}
+
+.fruit__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin: 0 0 clamp(3rem, 6vw, 5rem);
+}
+
+.fruit__body {
+  max-width: 56ch;
+  margin: 0 auto;
+  font-family: 'Ysabeau', sans-serif;
+  font-size: clamp(1.0625rem, 1.1vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.75;
+  text-align: left;
+  color: var(--color-ivory);
+}
+
+.fruit__body p {
+  margin: 0 0 1.4em;
+}
+
+.fruit__body p:last-child {
+  margin-bottom: 0;
+}
+
+.fruit__image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.fruit__image img {
+  display: block;
+  width: 100%;
+  max-width: clamp(280px, 38vw, 460px);
+  height: auto;
+}

@@ -10,14 +10,17 @@ Design specification for the Mandara liqueur website.
 
 All colors should be defined as CSS custom properties on `:root`.
 
-| Token         | Variable                | Hex       | Role                                                                 |
-| ------------- | ----------------------- | --------- | -------------------------------------------------------------------- |
-| Mandarin      | `--color-mandarin`      | `#E5A04F` | Primary brand accent. CTAs, key highlights, brand moments.           |
-| Bitter Orange | `--color-bitter-orange` | `#DD7D2E` | Secondary accent. Hover states, gradient endpoints, depth.           |
-| Grove         | `--color-grove`         | `#7A8966` | Botanical accent. Subtle decorative touches, supporting brand color. |
-| Ivory         | `--color-ivory`         | `#FAF4E8` | Primary background. Light surfaces, cards.                           |
-| Umber         | `--color-umber`         | `#4A3A28` | Body text, secondary text, soft dark elements.                       |
-| Ink           | `--color-ink`           | `#2A1F11` | Primary text, headings, deepest dark zones.                          |
+| Token | Variable | Hex | Role |
+| ----- | -------- | --- | ---- |
+
+| Bitter Orange | `--color-bitter-orange` | `#DD7D2E` |
+Primary brand accent. CTAs, key highlights, brand moments. |
+| Mandarin | `--color-mandarin` | `#E5A04F` |
+Secondary accent. Hover states, gradient endpoints, depth. |
+| Grove | `--color-grove` | `#7A8966` | Botanical accent. Subtle decorative touches, supporting brand color. |
+| Ivory | `--color-ivory` | `#FAF4E8` | Primary background. Light surfaces, cards. |
+| Umber | `--color-umber` | `#4A3A28` | Body text, secondary text, soft dark elements. |
+| Ink | `--color-ink` | `#2A1F11` | Primary text, headings, deepest dark zones. |
 
 ### Usage rules
 

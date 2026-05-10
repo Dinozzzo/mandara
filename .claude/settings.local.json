@@ -4,7 +4,8 @@
       "Bash(rtk ls *)",
       "Bash(rtk find *)",
       "Read(//Users/dinoleotta/Documents/PERSONAL PROJECT/Mandara/**)",
-      "WebFetch(domain:integratedbio.com)"
+      "WebFetch(domain:integratedbio.com)",
+      "Bash(rtk grep *)"
     ]
   }
 }
