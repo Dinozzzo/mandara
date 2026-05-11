@@ -13,7 +13,7 @@
 .hero__bg {
   position: absolute;
   inset: 0;
-  background-image: url('../../images/hero.jpeg');
+  background-image: url('../images/hero.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -121,6 +121,23 @@ if (cocktailTrack && cocktailPrev && cocktailNext) {
     }
   });
 
+  // Trackpad horizontal scroll — two-finger horizontal swipe on a trackpad
+  // navigates cards. Vertical-dominant wheel events pass through to page scroll.
+  let wheelLock = false;
+  cocktailTrack.addEventListener(
+    'wheel',
+    (e) => {
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault();
+      if (wheelLock) return;
+      if (Math.abs(e.deltaX) < 12) return;
+      wheelLock = true;
+      goTo(cocktailIndex + (e.deltaX > 0 ? 1 : -1));
+      setTimeout(() => { wheelLock = false; }, 450);
+    },
+    { passive: false }
+  );
+
   // Touch swipe — mobile users have no arrow buttons, so swipe is the
   // only navigation. Only horizontal-dominant swipes count.
   let touchStartX = null;

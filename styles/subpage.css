@@ -104,8 +104,10 @@
   margin: clamp(2rem, 4vw, 3rem) 0 1rem;
 }
 
-/* On green pages (Responsibility, CGU), tint prose headings warm orange */
-.page--green .page__prose h2 {
+/* On green pages, tint prose + aside headings warm orange */
+.page--green .page__prose h2,
+.page--green .page__prose h3,
+.page--green .contact-aside h3 {
   color: var(--color-mandarin);
 }
 
