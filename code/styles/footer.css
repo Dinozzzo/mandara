@@ -1,28 +1,9 @@
-/* Site footer — shared across home and all sub-pages. Fades in 1.5s
-   after page load with a slow ease. */
+/* Site footer — shared across home and all sub-pages. */
 
 .site-footer {
   background-color: var(--color-ink);
   color: var(--color-ivory);
   padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter) clamp(2rem, 4vw, 3rem);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: footer-reveal 2200ms var(--ease-luxury) 1500ms forwards;
-}
-
-@keyframes footer-reveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .site-footer {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
 }
 
 .site-footer__inner {

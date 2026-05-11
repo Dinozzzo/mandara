@@ -1,3 +1,11 @@
+// Always start from the top on page load / refresh — disables the
+// browser's automatic scroll restoration and resets to (0, 0) before
+// the first paint so Lenis takes over from a clean slate.
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 // Header scroll state + mobile drawer + Lenis smooth scroll
 
 const header = document.querySelector('.site-header');
@@ -69,34 +77,26 @@ links.forEach((link) => {
   });
 });
 
-// Cocktail carousel — arrow buttons + ← / → keys scroll the track by
-// one card width. Wraps around at both ends. Native scroll-snap handles
-// the smooth snap. Lenis ignores the track via `data-lenis-prevent`.
+// Cocktail carousel — transform-based slider driven by arrow buttons,
+// ← / → keys, and mobile swipe. No internal scroll container, so wheel
+// events over a card pass through to page scroll. Wraps at both ends.
 const cocktailTrack = document.querySelector('.cocktails__track');
 const cocktailPrev = document.querySelector('.cocktails__nav--prev');
 const cocktailNext = document.querySelector('.cocktails__nav--next');
 const cocktailsSection = document.querySelector('.cocktails');
 
 if (cocktailTrack && cocktailPrev && cocktailNext) {
-  const scrollByCard = (dir) => {
-    const card = cocktailTrack.querySelector('.cocktails__card');
-    if (!card) return;
-    const cardWidth = card.offsetWidth;
-    const { scrollLeft, scrollWidth, clientWidth } = cocktailTrack;
-    const maxScroll = scrollWidth - clientWidth;
-    const atEnd = scrollLeft >= maxScroll - 2;
-    const atStart = scrollLeft <= 2;
+  const cards = cocktailTrack.querySelectorAll('.cocktails__card');
+  const total = cards.length;
+  let cocktailIndex = 0;
 
-    let target;
-    if (dir > 0 && atEnd) target = 0;            // wrap forward → first card
-    else if (dir < 0 && atStart) target = maxScroll; // wrap back → last card
-    else target = scrollLeft + dir * cardWidth;
-
-    cocktailTrack.scrollTo({ left: target, behavior: 'smooth' });
+  const goTo = (idx) => {
+    cocktailIndex = ((idx % total) + total) % total; // wrap both directions
+    cocktailTrack.style.transform = `translateX(-${cocktailIndex * 100}%)`;
   };
 
-  cocktailPrev.addEventListener('click', () => scrollByCard(-1));
-  cocktailNext.addEventListener('click', () => scrollByCard(1));
+  cocktailPrev.addEventListener('click', () => goTo(cocktailIndex - 1));
+  cocktailNext.addEventListener('click', () => goTo(cocktailIndex + 1));
 
   // Keyboard nav — only active when the cocktails section is the focus
   // of the viewport, so arrow keys keep scrolling the page elsewhere.
@@ -114,12 +114,108 @@ if (cocktailTrack && cocktailPrev && cocktailNext) {
     if (e.target.matches('input, textarea, select')) return;
     if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      scrollByCard(-1);
+      goTo(cocktailIndex - 1);
     } else if (e.key === 'ArrowRight') {
       e.preventDefault();
-      scrollByCard(1);
+      goTo(cocktailIndex + 1);
     }
   });
+
+  // Touch swipe — mobile users have no arrow buttons, so swipe is the
+  // only navigation. Only horizontal-dominant swipes count.
+  let touchStartX = null;
+  let touchStartY = null;
+  cocktailTrack.addEventListener(
+    'touchstart',
+    (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+  cocktailTrack.addEventListener(
+    'touchend',
+    (e) => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      const dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        goTo(cocktailIndex + (dx < 0 ? 1 : -1));
+      }
+      touchStartX = null;
+      touchStartY = null;
+    },
+    { passive: true }
+  );
+}
+
+// Shop checkout flow — switches between four stages (product, bag,
+// shipping, fictive payment notice). Drives the quantity stepper and
+// keeps bag totals in sync with the unit price.
+const shopRoot = document.querySelector('.shop');
+if (shopRoot) {
+  const UNIT_PRICE = 40;
+  const qtyInput = shopRoot.querySelector('#qty');
+  const stages = shopRoot.querySelectorAll('[data-shop-stage]');
+  const bindQty = shopRoot.querySelectorAll('[data-shop-bind="qty"]');
+  const bindLine = shopRoot.querySelectorAll('[data-shop-bind="line-total"]');
+  const bindSub = shopRoot.querySelectorAll('[data-shop-bind="subtotal"]');
+
+  const clampQty = (n) => Math.max(1, Math.min(12, n || 1));
+
+  const syncTotals = () => {
+    const q = clampQty(parseInt(qtyInput.value, 10));
+    qtyInput.value = q;
+    const line = q * UNIT_PRICE;
+    bindQty.forEach((el) => (el.textContent = q));
+    bindLine.forEach((el) => (el.textContent = line));
+    bindSub.forEach((el) => (el.textContent = line));
+  };
+
+  const showStage = (name) => {
+    stages.forEach((s) => {
+      s.hidden = s.dataset.shopStage !== name;
+    });
+    // Bring the new stage to the top so the user sees it from the start.
+    const top = shopRoot.getBoundingClientRect().top + window.scrollY - 80;
+    if (lenis) lenis.scrollTo(top, { duration: 1.1 });
+    else window.scrollTo({ top, behavior: 'smooth' });
+  };
+
+  shopRoot.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-shop-action]');
+    if (!btn) return;
+    const action = btn.dataset.shopAction;
+    switch (action) {
+      case 'qty-up':
+        qtyInput.value = clampQty(parseInt(qtyInput.value, 10) + 1);
+        syncTotals();
+        break;
+      case 'qty-down':
+        qtyInput.value = clampQty(parseInt(qtyInput.value, 10) - 1);
+        syncTotals();
+        break;
+      case 'add-to-bag':
+        syncTotals();
+        showStage('bag');
+        break;
+      case 'back-to-product':
+        showStage('product');
+        break;
+      case 'to-checkout':
+        showStage('checkout');
+        break;
+      case 'back-to-bag':
+        showStage('bag');
+        break;
+      case 'to-payment':
+        showStage('payment-block');
+        break;
+    }
+  });
+
+  qtyInput.addEventListener('change', syncTotals);
+  syncTotals();
 }
 
 // Sub-page background decor — inject scattered ink line-drawings

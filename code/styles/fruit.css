@@ -27,6 +27,10 @@
   margin: 0 0 clamp(3rem, 6vw, 5rem);
 }
 
+.fruit__title-accent {
+  color: var(--color-mandarin);
+}
+
 .fruit__body {
   max-width: 56ch;
   margin: 0 auto;

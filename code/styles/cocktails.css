@@ -116,27 +116,21 @@
 
 .cocktails__viewport {
   position: relative;
+  overflow: hidden;
 }
 
-/* Track — horizontal flex with scroll-snap. Hidden scrollbar. */
+/* Track — horizontal flex translated via JS. No native scrolling, so
+   wheel/touch events pass through to page scroll. */
 .cocktails__track {
   display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  overscroll-behavior-x: contain;
-}
-
-.cocktails__track::-webkit-scrollbar {
-  display: none;
+  transform: translateX(0);
+  transition: transform 700ms var(--ease-luxury);
+  will-change: transform;
 }
 
 .cocktails__card {
   flex: 0 0 100%;
   min-width: 0;
-  scroll-snap-align: start;
   display: grid;
   grid-template-columns: 5fr 6fr;
   gap: clamp(2rem, 5vw, 4rem);
