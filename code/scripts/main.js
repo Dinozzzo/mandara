@@ -232,11 +232,11 @@ if (pageEl) {
   const isContact = !!document.querySelector('.contact-form');
   const items = isContact
     ? [
-        { shape: LEAF,  top: '8%',  side: 'left:4%',   w: 130, rot: -22 },
-        { shape: SLICE, top: '22%', side: 'right:5%',  w: 150, rot: 18 },
-        { shape: LEAF,  top: '50%', side: 'left:7%',   w: 120, rot: 32 },
-        { shape: SLICE, top: '62%', side: 'right:6%',  w: 140, rot: -14 },
-        { shape: LEAF,  top: '85%', side: 'left:8%',   w: 120, rot: -28 },
+        { shape: SLICE, top: '6%',  side: 'left:5%',   w: 140, rot: -14 },
+        { shape: LEAF,  top: '22%', side: 'right:7%',  w: 120, rot: 32 },
+        { shape: LEAF,  top: '46%', side: 'left:6%',   w: 130, rot: -28 },
+        { shape: SLICE, top: '66%', side: 'right:5%',  w: 150, rot: 18 },
+        { shape: LEAF,  top: '88%', side: 'right:8%',  w: 110, rot: 24 },
       ]
     : [
         { shape: LEAF,  top: '6%',  side: 'left:3%',   w: 110, rot: -22 },
