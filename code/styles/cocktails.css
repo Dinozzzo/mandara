@@ -1,0 +1,301 @@
+/* Cocktails — ink-toned horizontal carousel. One card at a time,
+   image left, recipe right. Native scroll-snap + arrow buttons. */
+
+.cocktails {
+  position: relative;
+  background-color: var(--color-bitter-orange);
+  color: var(--color-ink);
+  min-height: 60vh;
+  padding: clamp(4rem, 7vw, 6rem) 0;
+}
+
+/* Ticker — thin ink strip between the fruit (green) and cocktails
+   (orange) sections, with text sliding left-to-right in a loop. */
+.ticker {
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
+  overflow: hidden;
+  padding: 14px 0;
+}
+
+.ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  animation: ticker-flow 42s linear infinite;
+  will-change: transform;
+}
+
+.ticker__item {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.75rem, 1vw, 0.875rem);
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  padding: 0 2.5rem;
+  color: var(--color-ivory);
+}
+
+.ticker__sep {
+  display: inline-block;
+  color: var(--color-mandarin);
+  font-size: 0.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Track holds two identical sets of items; animating from -50% → 0
+   moves the track rightward, looping seamlessly when it wraps. */
+@keyframes ticker-flow {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track {
+    animation: none;
+  }
+}
+
+/* Botanical decor — leaves & orange slices, ink line drawings at very
+   low opacity, scattered in the corners (away from card content). */
+.cocktails__decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  color: var(--color-ink);
+}
+
+.cocktails__decor-item {
+  position: absolute;
+  display: block;
+  opacity: 0.09;
+}
+
+.cocktails__decor-item--leaf-1 {
+  top: 12%;
+  left: 4%;
+  width: clamp(90px, 10vw, 150px);
+  transform: rotate(-22deg);
+}
+
+.cocktails__decor-item--slice-1 {
+  bottom: 10%;
+  right: 5%;
+  width: clamp(100px, 11vw, 160px);
+  transform: rotate(18deg);
+}
+
+@media (max-width: 720px) {
+  .cocktails__decor-item {
+    display: none;
+  }
+}
+
+.cocktails__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.cocktails__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+}
+
+.cocktails__viewport {
+  position: relative;
+}
+
+/* Track — horizontal flex with scroll-snap. Hidden scrollbar. */
+.cocktails__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+
+.cocktails__track::-webkit-scrollbar {
+  display: none;
+}
+
+.cocktails__card {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  padding: 0 clamp(3rem, 8vw, 6rem); /* leave breathing room for arrow buttons */
+}
+
+/* Image — soft shadow, small radius, fixed aspect for consistency */
+.cocktails__image {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  justify-self: center;
+  aspect-ratio: 4 / 5;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 32px 64px -22px rgba(0, 0, 0, 0.55),
+    0 18px 40px -28px rgba(0, 0, 0, 0.4);
+}
+
+.cocktails__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder for missing cocktail photography */
+.cocktails__image--placeholder {
+  background: rgba(42, 31, 17, 0.06);
+  border: 1px solid rgba(42, 31, 17, 0.16);
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(42, 31, 17, 0.5);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Recipe — editorial typography, restrained */
+.cocktails__recipe {
+  max-width: 44ch;
+}
+
+.cocktails__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin: 0 0 clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.cocktails__ingredients {
+  margin: 0 0 clamp(1.25rem, 2.5vw, 1.75rem);
+  font-family: 'Ysabeau', sans-serif;
+  font-size: clamp(0.95rem, 1vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--color-ink);
+}
+
+.cocktails__ingredients li {
+  padding: 0.35em 0;
+  border-bottom: 1px solid rgba(42, 31, 17, 0.16);
+}
+
+.cocktails__ingredients li:first-child {
+  border-top: 1px solid rgba(42, 31, 17, 0.16);
+}
+
+.cocktails__method {
+  margin: 0;
+  font-family: 'Ysabeau', sans-serif;
+  font-size: clamp(0.95rem, 1vw, 1.0625rem);
+  line-height: 1.7;
+  font-style: italic;
+  color: var(--color-ink);
+  opacity: 0.82;
+}
+
+/* Arrow buttons — subtle glass pills, centered vertically */
+.cocktails__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(42, 31, 17, 0.06);
+  border: 1px solid rgba(42, 31, 17, 0.22);
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition:
+    background 320ms var(--ease-luxury),
+    border-color 320ms var(--ease-luxury),
+    transform 320ms var(--ease-luxury);
+  z-index: 3;
+}
+
+.cocktails__nav:hover,
+.cocktails__nav:focus-visible {
+  background: rgba(42, 31, 17, 0.14);
+  border-color: rgba(42, 31, 17, 0.4);
+  outline: none;
+}
+
+.cocktails__nav svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cocktails__nav--prev {
+  left: clamp(0.25rem, 1.5vw, 1rem);
+}
+
+.cocktails__nav--next {
+  right: clamp(0.25rem, 1.5vw, 1rem);
+}
+
+/* Mobile — stack image above recipe, hide arrows in favor of swipe */
+@media (max-width: 720px) {
+  .cocktails {
+    min-height: auto;
+  }
+
+  .cocktails__card {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 4vw, 2rem);
+    padding: 0 var(--gutter);
+  }
+
+  .cocktails__image {
+    max-width: 320px;
+  }
+
+  .cocktails__recipe {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .cocktails__ingredients {
+    text-align: left;
+    max-width: 32ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cocktails__nav {
+    display: none;
+  }
+}

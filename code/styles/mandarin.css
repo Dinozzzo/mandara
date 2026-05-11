@@ -4,6 +4,9 @@
 .mandarin {
   position: relative;
   background-color: var(--color-bitter-orange);
+  /* `clip` (not `hidden`) so the off-screen slide-in images don't extend
+     the page width, while still allowing position:sticky on the tree. */
+  overflow: clip;
 }
 
 .mandarin__wave {
@@ -231,24 +234,25 @@
   justify-self: end;
 }
 
-/* Image — mandarin frame only (no extra borders).
-   Sized so a subsection (title + split) fits within ~100vh: width is
-   capped both by pixel size and by viewport height (with the 4/5 aspect
-   ratio the resulting image height stays around 60vh). */
+/* Image — bare photo with soft shadow, small radius. Slides in from
+   the page edge when its subsection enters the viewport (see scroll
+   reveal block below). */
 .mandarin__image-wrap {
   position: relative;
   width: 100%;
-  max-width: min(460px, 48vh);
+  max-width: min(560px, 58vh);
   justify-self: center;
 }
 
 .mandarin__image-frame {
   position: relative;
   z-index: 1;
-  border: 12px solid var(--color-mandarin);
-  border-radius: 32px;
+  border-radius: 12px;
   overflow: hidden;
   aspect-ratio: 4 / 5;
+  box-shadow:
+    0 32px 64px -22px rgba(0, 0, 0, 0.40),
+    0 18px 40px -28px rgba(0, 0, 0, 0.28);
 }
 
 .mandarin__image-frame img {
@@ -256,6 +260,32 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Scroll-triggered slide-in. JS adds `.is-in-view` to a split when it
+   enters the viewport; until then the image sits off the page edge.
+   Skipped entirely for reduced-motion users (image just renders in place). */
+@media (prefers-reduced-motion: no-preference) {
+  .mandarin__split .mandarin__image-wrap {
+    opacity: 0;
+    transition:
+      transform 2800ms var(--ease-luxury),
+      opacity 2200ms ease-out;
+    will-change: transform, opacity;
+  }
+
+  .mandarin__split:not(.mandarin__split--reversed) .mandarin__image-wrap {
+    transform: translateX(-110%);
+  }
+
+  .mandarin__split--reversed .mandarin__image-wrap {
+    transform: translateX(-110%);
+  }
+
+  .mandarin__split.is-in-view .mandarin__image-wrap {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Body text */

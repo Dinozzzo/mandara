@@ -1,0 +1,149 @@
+/* Site footer — shared across home and all sub-pages. Fades in 1.5s
+   after page load with a slow ease. */
+
+.site-footer {
+  background-color: var(--color-ink);
+  color: var(--color-ivory);
+  padding: clamp(3.5rem, 7vw, 5.5rem) var(--gutter) clamp(2rem, 4vw, 3rem);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: footer-reveal 2200ms var(--ease-luxury) 1500ms forwards;
+}
+
+@keyframes footer-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+.site-footer__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+
+/* Social icons row */
+.site-footer__social {
+  display: flex;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.site-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(250, 244, 232, 0.18);
+  color: var(--color-ivory);
+  opacity: 0.85;
+  transition:
+    opacity 320ms var(--ease-luxury),
+    border-color 320ms var(--ease-luxury),
+    background 320ms var(--ease-luxury),
+    color 320ms var(--ease-luxury);
+}
+
+.site-footer__social a:hover,
+.site-footer__social a:focus-visible {
+  opacity: 1;
+  border-color: var(--color-mandarin);
+  color: var(--color-mandarin);
+  outline: none;
+}
+
+.site-footer__social svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Footer nav links row */
+.site-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.site-footer__nav a {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.05vw, 1.125rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  opacity: 0.78;
+  transition:
+    opacity 320ms var(--ease-luxury),
+    color 320ms var(--ease-luxury);
+}
+
+.site-footer__nav a:hover,
+.site-footer__nav a:focus-visible {
+  opacity: 1;
+  color: var(--color-mandarin);
+}
+
+/* Notices — fictive project + responsible drinking */
+.site-footer__notices {
+  font-family: 'Ysabeau', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--color-ivory);
+  opacity: 0.62;
+}
+
+.site-footer__notices p {
+  margin: 0 0 0.5em;
+  white-space: nowrap;
+}
+
+.site-footer__notices p:last-child {
+  margin-bottom: 0;
+}
+
+/* Below desktop — allow wrap when the lines no longer fit on a single row */
+@media (max-width: 1024px) {
+  .site-footer__notices {
+    max-width: 56ch;
+  }
+  .site-footer__notices p {
+    white-space: normal;
+  }
+}
+
+.site-footer__notices strong {
+  font-weight: 500;
+  color: var(--color-mandarin);
+  letter-spacing: 0.04em;
+}
+
+/* Bottom strip — copyright */
+.site-footer__bottom {
+  width: 100%;
+  border-top: 1px solid rgba(250, 244, 232, 0.1);
+  padding-top: clamp(1.25rem, 3vw, 2rem);
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  opacity: 0.5;
+}

@@ -1,0 +1,302 @@
+/* Shared layout for sub-pages (about / contact / responsibility /
+   privacy / cgu). Each page is a banner block sitting under the
+   transparent header, with title + content. Background color via
+   `--green` / `--orange` modifiers. */
+
+.page {
+  position: relative;
+  min-height: calc(100vh - var(--header-height));
+  padding: calc(var(--header-height) + clamp(3rem, 7vw, 6rem))
+    var(--gutter) clamp(4rem, 9vw, 7rem);
+  overflow: hidden;
+}
+
+.page--green {
+  background-color: var(--color-grove);
+  color: var(--color-ivory);
+}
+
+.page--orange {
+  background-color: var(--color-bitter-orange);
+  color: var(--color-ink);
+}
+
+/* Background botanical decor — ink line drawings, very low opacity,
+   scattered down the length of the page. Injected by main.js so each
+   sub-page picks them up automatically. */
+.page__decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  color: var(--color-ink);
+}
+
+.page--green .page__decor {
+  color: var(--color-ivory);
+}
+
+.page__decor-item {
+  position: absolute;
+  display: block;
+  opacity: 0.09;
+}
+
+.page--green .page__decor-item {
+  opacity: 0.13;
+}
+
+@media (max-width: 720px) {
+  .page__decor-item {
+    width: 70px !important;
+  }
+}
+
+.page__inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.page__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  letter-spacing: 0.08em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 clamp(3rem, 6vw, 5rem);
+}
+
+/* Two-column split, used for About + Contact */
+.page__split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 7vw, 6rem);
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .page__split {
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 6vw, 4rem);
+  }
+}
+
+/* Long-form prose block (Responsibility / Privacy / CGU) */
+.page__prose {
+  max-width: 68ch;
+  margin: 0 auto;
+  font-family: 'Ysabeau', sans-serif;
+  font-size: clamp(1rem, 1.05vw, 1.1875rem);
+  line-height: 1.8;
+}
+
+.page__prose h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: clamp(2rem, 4vw, 3rem) 0 1rem;
+}
+
+.page__prose p {
+  margin: 0 0 1.25em;
+}
+
+/* ============================================================
+   ABOUT — left text, right image slot that slides in from right
+   ============================================================ */
+.about__body {
+  font-family: 'Ysabeau', sans-serif;
+  font-size: clamp(1rem, 1.05vw, 1.125rem);
+  line-height: 1.75;
+}
+
+.about__body h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0 0 clamp(1.5rem, 3vw, 2rem);
+}
+
+.about__body p {
+  margin: 0 0 1.25em;
+}
+
+.about__awards {
+  margin: clamp(1.5rem, 3vw, 2rem) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.85em;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+.about__awards li {
+  padding: 0.5em 0;
+  border-bottom: 1px solid rgba(250, 244, 232, 0.18);
+}
+
+.about__awards li:first-child {
+  border-top: 1px solid rgba(250, 244, 232, 0.18);
+}
+
+.about__awards li strong {
+  display: inline-block;
+  min-width: 3.5em;
+  font-weight: 500;
+  color: var(--color-mandarin);
+  letter-spacing: 0.08em;
+}
+
+.about__image {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(250, 244, 232, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(250, 244, 232, 0.55);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  box-shadow:
+    0 32px 64px -22px rgba(0, 0, 0, 0.45),
+    0 18px 40px -28px rgba(0, 0, 0, 0.3);
+}
+
+/* Slide-in from left — fires when about__image enters viewport */
+@media (prefers-reduced-motion: no-preference) {
+  .about__image {
+    opacity: 0;
+    transform: translateX(-60%);
+    transition:
+      transform 2400ms var(--ease-luxury),
+      opacity 1800ms ease-out;
+    will-change: transform, opacity;
+  }
+  .about__image.is-in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ============================================================
+   CONTACT — form on left, privacy note on right
+   ============================================================ */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.4rem);
+}
+
+.contact-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 2vw, 1.4rem);
+}
+
+@media (max-width: 480px) {
+  .contact-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.contact-form__field label {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0.7;
+}
+
+.contact-form__field input,
+.contact-form__field textarea {
+  font-family: 'Ysabeau', sans-serif;
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(42, 31, 17, 0.35);
+  padding: 0.5em 0;
+  outline: none;
+  resize: vertical;
+  transition: border-color 280ms var(--ease-luxury);
+}
+
+.contact-form__field input:focus,
+.contact-form__field textarea:focus {
+  border-bottom-color: var(--color-ink);
+}
+
+.contact-form__field textarea {
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.contact-form__submit {
+  align-self: flex-start;
+  margin-top: clamp(0.5rem, 1.5vw, 1rem);
+  padding: 0.9em 2.4em;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  background: var(--color-ink);
+  border: 1px solid var(--color-ink);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 320ms var(--ease-luxury),
+    color 320ms var(--ease-luxury);
+}
+
+.contact-form__submit:hover,
+.contact-form__submit:focus-visible {
+  background: transparent;
+  color: var(--color-ink);
+  outline: none;
+}
+
+.contact-aside {
+  font-family: 'Ysabeau', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-ink);
+  opacity: 0.78;
+}
+
+.contact-aside h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 1rem;
+  opacity: 1;
+}
+
+.contact-aside p {
+  margin: 0 0 1em;
+}
