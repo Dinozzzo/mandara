@@ -1,5 +1,5 @@
-/* Mandarin section — orange panel below the hero, with a two-peak
-   wave rising from its top edge into the hero above. */
+/* Mandarin section — orange panel below the hero. The wavy top edge
+   is produced by the .hero__wave element rising into the hero above. */
 
 .mandarin {
   position: relative;
@@ -7,24 +7,6 @@
   /* `clip` (not `hidden`) so the off-screen slide-in images don't extend
      the page width, while still allowing position:sticky on the tree. */
   overflow: clip;
-}
-
-.mandarin__wave {
-  position: absolute;
-  bottom: 100%;
-  left: 0;
-  width: 100%;
-  height: 160px;
-  margin-bottom: -1px; /* hairline overlap to avoid sub-pixel seam */
-  display: block;
-  pointer-events: none;
-  z-index: 1;
-}
-
-@media (max-width: 720px) {
-  .mandarin__wave {
-    height: 100px;
-  }
 }
 
 /* Tree — decorative, anchored right, pinned via sticky while scrolling

@@ -81,3 +81,22 @@
     animation: none;
   }
 }
+
+/* Wavy bottom edge — orange wave rises from the bottom of the hero,
+   meeting the mandarin section below seamlessly. */
+.hero__wave {
+  position: absolute;
+  left: 0;
+  bottom: -1px; /* hairline overlap with the mandarin section below */
+  width: 100%;
+  height: 160px;
+  display: block;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (max-width: 720px) {
+  .hero__wave {
+    height: 100px;
+  }
+}
